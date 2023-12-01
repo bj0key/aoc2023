@@ -4,11 +4,11 @@ fn main() {
         .filter(|s| s.chars().any(|c| !c.is_whitespace()))
         .collect();
 
-    part1(&input);
-    part2(&input);
+    println!("Part 1: {}", part1(&input));
+    println!("Part 2: {}", part2(&input));
 }
 
-fn part1(input: &[&'static str]) {
+fn part1(input: &[&'static str]) -> u32 {
     let mut sum: u32 = 0;
     for line in input {
         // Part 1 only wants us to find the literal characters 1-9, so I use `char.to_digit`,
@@ -21,10 +21,10 @@ fn part1(input: &[&'static str]) {
             panic!("[Part 1] Couldn't find any digits within line {line:?}!");
         }
     }
-    println!("Part 1: {sum}");
+    sum
 }
 
-fn part2(input: &[&'static str]) {
+fn part2(input: &[&'static str]) -> u32 {
     let mut sum: u32 = 0;
 
     for line in input {
@@ -46,7 +46,7 @@ fn part2(input: &[&'static str]) {
         }
     }
 
-    println!("Part 2: {sum}");
+    sum
 }
 
 /// Given some string, try to parse the beginning to see if it begins with either a digit 1-9,
