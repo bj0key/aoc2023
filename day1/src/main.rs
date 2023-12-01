@@ -25,10 +25,10 @@ fn part1(input: &Vec<&'static str>) {
 }
 
 fn part2(input: &Vec<&'static str>) {
-    let mut sum: u64 = 0;
+    let mut sum: u32 = 0;
 
     for line in input {
-        let mut buf: Vec<u64> = Vec::with_capacity(line.len());
+        let mut buf: Vec<u32> = Vec::with_capacity(line.len());
 
         // Part 2 now asks us to also consider the literal words for digits "one" through "nine",
         // so I made a helper function for trying to parse a digit value out of the start of
@@ -51,17 +51,17 @@ fn part2(input: &Vec<&'static str>) {
 
 /// Given some string, try to parse the beginning to see if it begins with either a digit 1-9,
 /// or the literal word "one" through to "nine"
-fn get_number_at_start(s: &str) -> Option<u64> {
+fn get_number_at_start(s: &str) -> Option<u32> {
     let words = [
         "one", "two", "three", "four", "five", "six", "seven", "eight", "nine",
     ];
     for (i, word) in words.into_iter().enumerate() {
         if s.starts_with(word) {
-            return Some(i as u64 + 1);
+            return Some(i as u32 + 1);
         }
     }
     if let Some(c) = s.chars().next().and_then(|c| c.to_digit(10)) {
-        return Some(c as u64);
+        return Some(c);
     }
     None
 }
