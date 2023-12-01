@@ -8,7 +8,7 @@ fn main() {
     part2(&input);
 }
 
-fn part1(input: &Vec<&'static str>) {
+fn part1(input: &[&'static str]) {
     let mut sum: u32 = 0;
     for line in input {
         // Part 1 only wants us to find the literal characters 1-9, so I use `char.to_digit`,
@@ -24,7 +24,7 @@ fn part1(input: &Vec<&'static str>) {
     println!("Part 1: {sum}");
 }
 
-fn part2(input: &Vec<&'static str>) {
+fn part2(input: &[&'static str]) {
     let mut sum: u32 = 0;
 
     for line in input {
