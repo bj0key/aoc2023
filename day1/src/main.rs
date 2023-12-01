@@ -8,7 +8,7 @@ fn main() {
     println!("Part 2: {}", part2(&input));
 }
 
-fn part1(input: &[&'static str]) -> u32 {
+pub fn part1(input: &[&'static str]) -> u32 {
     let mut sum: u32 = 0;
     for line in input {
         // Part 1 only wants us to find the literal characters 1-9, so I use `char.to_digit`,
@@ -24,7 +24,7 @@ fn part1(input: &[&'static str]) -> u32 {
     sum
 }
 
-fn part2(input: &[&'static str]) -> u32 {
+pub fn part2(input: &[&'static str]) -> u32 {
     let mut sum: u32 = 0;
 
     for line in input {
@@ -64,4 +64,33 @@ fn get_number_at_start(s: &str) -> Option<u32> {
         return Some(c);
     }
     None
+}
+
+#[cfg(test)]
+mod day1_tests {
+    use crate::{part1, part2};
+
+    const TEST_INPUT_1: &[&'static str] = &["1abc2", "pqr3stu8vwx", "a1b2c3d4e5f", "treb7uchet"];
+
+    const TEST_INPUT_2: &[&'static str] = &[
+        "two1nine",
+        "eightwothree",
+        "abcone2threexyz",
+        "xtwone3four",
+        "4nineeightseven2",
+        "zoneight234",
+        "7pqrstsixteen",
+    ];
+    const EXPECTED_PART_1: u32 = 142;
+    const EXPECTED_PART_2: u32 = 281;
+
+    #[test]
+    fn test_part1() {
+        assert_eq!(part1(TEST_INPUT_1), EXPECTED_PART_1);
+    }
+
+    #[test]
+    fn test_part2() {
+        assert_eq!(part2(TEST_INPUT_2), EXPECTED_PART_2);
+    }
 }
