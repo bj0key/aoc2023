@@ -75,17 +75,27 @@ pub struct Game {
 pub fn parse_input(input: &str) -> Vec<Game> {
     let mut games = vec![];
     for line in input.lines() {
-        let (game_id_str, bag_pulls_str) =
-            line.strip_prefix("Game ").unwrap().split_once(':').unwrap();
+        let (game_id_str, bag_pulls_str) = line
+            .strip_prefix("Game ")
+            .and_then(|s| s.split_once(':'))
+            .expect("Each line should contain a colon character after the line number");
 
         let game_id: u32 = game_id_str.parse().unwrap();
 
         let mut game_draws = vec![];
 
         for color_chunk in bag_pulls_str.split(|c| c == ',' || c == ';').map(str::trim) {
-            let (n_str, color_str) = color_chunk.split_once(' ').unwrap();
-            let n: u32 = n_str.parse().unwrap();
-            let color: Color = color_str.parse().unwrap();
+            let (n, color): (u32, Color) = color_chunk
+                .split_once(' ')
+                .and_then(|(n, c)| {
+                    if let (Ok(n), Ok(c)) = (n.parse(), c.parse()) {
+                        Some((n, c))
+                    } else {
+                        None
+                    }
+                })
+                .expect("The extracted chunks from the text should be of the form \"n color\"");
+
             game_draws.push((color, n));
         }
 
