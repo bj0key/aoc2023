@@ -43,6 +43,7 @@ pub enum Color {
     Green,
     Blue,
 }
+
 impl Color {
     fn max_allowed(&self) -> u32 {
         match self {
@@ -83,12 +84,11 @@ pub fn parse_input(input: &str) -> Vec<Game> {
 
         for color_chunk in bag_pulls_str.split(|c| c == ',' || c == ';').map(str::trim) {
             let (n_str, color_str) = color_chunk.split_once(' ').unwrap();
-
             let n: u32 = n_str.parse().unwrap();
             let color: Color = color_str.parse().unwrap();
-
             game_draws.push((color, n));
         }
+
         games.push(Game {
             id: game_id,
             draws: game_draws,
