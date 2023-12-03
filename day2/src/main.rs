@@ -1,5 +1,3 @@
-use std::str::FromStr;
-
 fn main() {
     let raw_input = include_str!("../input");
     let parsed_input = parse_input(raw_input);
@@ -54,7 +52,7 @@ impl Color {
     }
 }
 
-impl FromStr for Color {
+impl std::str::FromStr for Color {
     type Err = ();
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
