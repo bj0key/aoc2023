@@ -29,7 +29,6 @@ fn part2(schematic: &Schematic) -> u32 {
     for (y, row) in schematic.iter().enumerate() {
         for (x, cell) in row.iter().enumerate() {
             if let Component::Symbol('*') = cell {
-                println!("{:?}", cell);
                 let neighbor_nums = neighbour_number_prod(schematic, x, y);
                 if neighbor_nums.len() == 2 {
                     num_pairs.push(neighbor_nums);
@@ -46,10 +45,7 @@ fn part2(schematic: &Schematic) -> u32 {
 fn has_neighbouring_symbol(schematic: &Schematic, x: usize, y: usize) -> bool {
     assert!(match schematic[y][x] {
         Component::Number { .. } => true,
-        _ => {
-            println!("Something baaad! schematic[y][x] = {:?}", schematic[y][x]);
-            false
-        }
+        _ => false,
     });
     let neighbours = neighbours(x, y);
     for (x, y) in neighbours {
@@ -89,7 +85,7 @@ type Schematic = Vec<Vec<Component>>;
 fn parse_input(input: &str) -> Schematic {
     let mut v: Vec<Vec<Component>> = vec![];
     let mut id = 0;
-    for (y, line) in input.lines().enumerate() {
+    for (_, line) in input.lines().enumerate() {
         let mut row = vec![];
         let mut digits_to_skip = 0;
         for (x, chr) in line.chars().enumerate() {
