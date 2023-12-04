@@ -11,7 +11,7 @@ fn part1(schematic: &Schematic) -> u32 {
     for (y, row) in schematic.iter().enumerate() {
         for (x, cell) in row.iter().enumerate() {
             if let Component::Number { id, value } = cell {
-                if has_neighbouring_symbol(&schematic, x, y) {
+                if any_neighbour_symbols(&schematic, x, y) {
                     numbers.push((*id, *value));
                 }
             }
@@ -29,7 +29,7 @@ fn part2(schematic: &Schematic) -> u32 {
     for (y, row) in schematic.iter().enumerate() {
         for (x, cell) in row.iter().enumerate() {
             if let Component::Symbol('*') = cell {
-                let neighbor_nums = neighbour_number_prod(schematic, x, y);
+                let neighbor_nums = neighbour_nums(schematic, x, y);
                 if neighbor_nums.len() == 2 {
                     num_pairs.push(neighbor_nums);
                 }
@@ -42,13 +42,13 @@ fn part2(schematic: &Schematic) -> u32 {
         .sum()
 }
 
-fn has_neighbouring_symbol(schematic: &Schematic, x: usize, y: usize) -> bool {
+fn any_neighbour_symbols(schematic: &Schematic, x: usize, y: usize) -> bool {
     assert!(match schematic[y][x] {
         Component::Number { .. } => true,
         _ => false,
     });
-    let neighbours = neighbours(x, y);
-    for (x, y) in neighbours {
+
+    for (x, y) in neighbours(x, y) {
         if let Some(Component::Symbol(_)) = schematic.get(y).and_then(|v| v.get(x)) {
             return true;
         }
@@ -57,7 +57,7 @@ fn has_neighbouring_symbol(schematic: &Schematic, x: usize, y: usize) -> bool {
 }
 
 /// Gets a Vec of any numbers surrounding a set of coords, already de-duplicated
-fn neighbour_number_prod(schematic: &Schematic, x: usize, y: usize) -> Vec<u32> {
+fn neighbour_nums(schematic: &Schematic, x: usize, y: usize) -> Vec<u32> {
     assert!(match schematic[y][x] {
         Component::Symbol('*') => true,
         _ => false,
