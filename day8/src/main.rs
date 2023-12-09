@@ -5,9 +5,8 @@ fn main() {
 
     let (directions, map) = parse_input(&raw_input);
 
-    // println!("Part 1: {}", part1(&directions, &map));
+    println!("Part 1: {}", part1(&directions, &map));
     println!("Part 2: {}", part2(&directions, &map));
-    // 2010045535 is too low?
 }
 
 fn part1(directions: &[Direction], map: &Network) -> i64 {
@@ -20,7 +19,6 @@ fn part2(directions: &[Direction], map: &Network) -> i64 {
     for loc in starter_locations {
         lengths.push(path_length(loc, |loc| loc[2] == b'Z', directions, map));
     }
-    println!("{lengths:?}");
     lengths.into_iter().fold(1, |acc, r| lcm(acc, r))
 }
 
@@ -56,15 +54,6 @@ fn path_length(
     }
 
     steps
-}
-
-fn pprint(directions: Vec<Direction>, map: Network) {
-    println!("Directions: {:?}", directions);
-    println!("Map:");
-    for (a, (b, c)) in map.iter() {
-        let [a, b, c] = [a, b, c].map(|s| std::str::from_utf8(s).unwrap());
-        println!("{} = ({}, {})", a, b, c);
-    }
 }
 
 #[derive(Debug)]
